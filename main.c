@@ -5,8 +5,16 @@
 // 4 - player hit a monster (definitely not implemented yet)
 
 #include <ncurses.h>
+#include <time.h>
 int x = 2;
 int y = 2;
+int steps = 0;
+int message_code = 0;
+
+void player_display()
+{
+	mvprintw(y,x,"@");
+}
 
 int player_walk(dir)	// now includes collision check!
 {
@@ -45,19 +53,9 @@ int player_walk(dir)	// now includes collision check!
 	return error;
 }
 
-int main()
+void message_display(code)
 {
-    char ch;
-    int steps = 0;
-	int message_code = 0;
-    initscr();
-    keypad(stdscr, TRUE);
-    noecho();
-
-    while(true)
-    {  
-        mvprintw(y,x,"@");
-		switch(message_code)
+	switch(code)
 		{
 			case 0:
 		        mvprintw(23,0,"Ouch!");
@@ -66,9 +64,38 @@ int main()
 				mvprintw(23,0,"Steps: %i",steps);
 				break;
 		}
-        move(y,x);
-        refresh();
-        ch = getch();
+}
+void floodfill(x,y,xlength,ylength)
+{
+	int posx = 0;
+	int posy = 0;
+	while(posy < ylength)
+	{
+		while(posx < xlength)
+		{
+			mvprintw((posy+y),(posx+x),".");
+			posx = posx + 1;
+		}
+		posy = posy + 1;
+		posx = 0;
+	}
+}
+
+int main()
+{
+    char ch;
+    initscr();
+    keypad(stdscr, TRUE);
+    noecho();
+
+    while(true)
+    {  
+        floodfill(1,2,76,20); 		// the playing field
+        player_display();
+		message_display(message_code);
+		refresh();
+        move(y,x);					// moves the cursor to the player
+		ch = getch();
         clear();
 		if(player_walk(ch) == 0)
 		{
