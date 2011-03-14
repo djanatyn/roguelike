@@ -1,10 +1,16 @@
+// message handler codes:
+// 1 - player successfully moves, and the step is incremented
+// 2 - player bumped into a wall
+// 3 - player found gold (not implemented yet)
+// 4 - player hit a monster (definitely not implemented yet)
+
 #include <ncurses.h>
 int x = 2;
 int y = 2;
 
 int player_walk(dir)	// now includes collision check!
 {
-	int error = 1;
+	int error = 1;		// set as an error by default; if it runs successfully, change it
     switch(dir)
     {  
         case 106:		// down
@@ -71,7 +77,7 @@ int main()
     	}
 		else
 		{
-			message_code = 0;
+			message_code = 0;		// this means the player bumped into a wall
 		}
 	}
     return 0;
