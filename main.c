@@ -6,6 +6,18 @@
 
 #include <ncurses.h>
 #include <time.h>
+
+#define DOWN 106
+#define UP 107
+#define LEFT 104
+#define RIGHT 108
+
+#define FIELDLENGTH 76
+#define FIELDHEIGHT 20
+
+#define LENGTH 77
+#define HEIGHT 21
+
 int x = 2;
 int y = 2;
 int steps = 0;
@@ -16,53 +28,40 @@ void player_display()
     mvprintw(y,x,"@");
 }
 
-int player_walk(dir)    // now includes collision check!
+int player_walk(dir)                    // now includes collision check!
 {
-    int error = 1;                      // set as an error by default; if it runs successfully, change it
+    int error = 2;                      // set as an error by default; if it runs successfully, change it
     switch(dir)
-    {  
-        case 106:       // down
-            if(y < 21 && y >= 2)    // error codes:
-            {                       // 0 - no error, ran successfully
-                y = y + 1;          // 1 - wrong key entered (never entered a case)
-                error = 0;          // 2 - bumped into a wall (entered a case, but didn't meet the requirements)
-            }
-            else
-            {
-                error = 2;
+    {
+        default:
+            error = 1;
+            break;
+        case DOWN:                       // down
+            if(y < HEIGHT && y >= 2)        // error codes:
+            {                           // 0 - no error, ran successfully
+                y = y + 1;              // 1 - wrong key entered (never entered a case)
+                error = 0;              // 2 - bumped into a wall (entered a case, but didn't meet the requirements)
             }
             break;
-        case 107:       // up
-            if(y <= 21  && y > 2)
+        case UP:                       // up
+            if(y <= HEIGHT  && y > 2)
             {
                 y = y - 1;
                 error = 0;
             }
-            else
-            {
-                error = 2;
-            }
             break;
-        case 104:       // left
-            if(x <= 77 && x > 2)
+        case LEFT:                       // left
+            if(x <= LENGTH && x > 2)
             {
                 x = x - 1;
                 error = 0;
             }
-            else
-            {
-                error = 2;
-            }
             break;
-        case 108:       // right
-            if(x < 77 && x >= 2)
+        case RIGHT:                       // right
+            if(x < LENGTH && x >= 2)
             {
                 x = x + 1;
                 error = 0;
-            }
-            else
-            {
-                error = 2;
             }
             break;
     }
@@ -72,14 +71,14 @@ int player_walk(dir)    // now includes collision check!
 void message_display(code)
 {
     switch(code)
-        {
+        {   
             case 0:
-                mvprintw(23,0,"Wrong key, stupid.");
-                break;
-            case 1:
                 mvprintw(23,0,"Steps: %i",steps);
                 break;
-            case 2:
+            case 1:
+                mvprintw(23,0,"Wrong key, stupid.");
+                break;
+            case 2:    
                 mvprintw(23,0,"Ouch!");
                 break;
         }
@@ -109,7 +108,7 @@ int main()
 
     while(true)
     {  
-        floodfill(2,2,76,20);       // the playing field
+        floodfill(2,2,FIELDLENGTH,FIELDHEIGHT);       // the playing field
         player_display();
         message_display(message_code);
         refresh();
