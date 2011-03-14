@@ -18,14 +18,18 @@ void player_display()
 
 int player_walk(dir)	// now includes collision check!
 {
-	int error = 1;		// set as an error by default; if it runs successfully, change it
+	int error = 1;						// set as an error by default; if it runs successfully, change it
     switch(dir)
     {  
         case 106:		// down
-            if(y < 21 && y >= 2)
+            if(y < 21 && y >= 2)		// error codes:
+			{							// 0 - no error, ran successfully
+				y = y + 1;				// 1 - wrong key entered (never entered a case)
+				error = 0;				// 2 - bumped into a wall (entered a case, but didn't meet the requirements)
+			}
+			else
 			{
-				y = y + 1;
-				error = 0;
+				error = 2;
 			}
             break;
         case 107:		// up
@@ -34,6 +38,10 @@ int player_walk(dir)	// now includes collision check!
 				y = y - 1;
 				error = 0;
 			}
+			else
+			{
+				error = 2;
+			}
             break;
         case 104:		// left
             if(x <= 77 && x > 2)
@@ -41,12 +49,20 @@ int player_walk(dir)	// now includes collision check!
 				x = x - 1;
 				error = 0;
 			}
+			else
+			{
+				error = 2;
+			}
             break;
         case 108:		// right
             if(x < 77 && x >= 2)
 			{
 				x = x + 1;
 				error = 0;
+			}
+			else
+			{
+				error = 2;
 			}
             break;
     }
@@ -58,10 +74,13 @@ void message_display(code)
 	switch(code)
 		{
 			case 0:
-		        mvprintw(23,0,"Ouch!");
+		        mvprintw(23,0,"Wrong key, stupid.");
 				break;
 			case 1:
 				mvprintw(23,0,"Steps: %i",steps);
+				break;
+			case 2:
+				mvprintw(23,0,"Ouch!");
 				break;
 		}
 }
@@ -90,7 +109,7 @@ int main()
 
     while(true)
     {  
-        floodfill(1,2,76,20); 		// the playing field
+        floodfill(2,2,76,20); 		// the playing field
         player_display();
 		message_display(message_code);
 		refresh();
