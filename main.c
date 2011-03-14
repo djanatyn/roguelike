@@ -13,91 +13,91 @@ int message_code = 0;
 
 void player_display()
 {
-	mvprintw(y,x,"@");
+    mvprintw(y,x,"@");
 }
 
-int player_walk(dir)	// now includes collision check!
+int player_walk(dir)    // now includes collision check!
 {
-	int error = 1;						// set as an error by default; if it runs successfully, change it
+    int error = 1;                      // set as an error by default; if it runs successfully, change it
     switch(dir)
     {  
-        case 106:		// down
-            if(y < 21 && y >= 2)		// error codes:
-			{							// 0 - no error, ran successfully
-				y = y + 1;				// 1 - wrong key entered (never entered a case)
-				error = 0;				// 2 - bumped into a wall (entered a case, but didn't meet the requirements)
-			}
-			else
-			{
-				error = 2;
-			}
+        case 106:       // down
+            if(y < 21 && y >= 2)    // error codes:
+            {                       // 0 - no error, ran successfully
+                y = y + 1;          // 1 - wrong key entered (never entered a case)
+                error = 0;          // 2 - bumped into a wall (entered a case, but didn't meet the requirements)
+            }
+            else
+            {
+                error = 2;
+            }
             break;
-        case 107:		// up
+        case 107:       // up
             if(y <= 21  && y > 2)
-			{
-				y = y - 1;
-				error = 0;
-			}
-			else
-			{
-				error = 2;
-			}
+            {
+                y = y - 1;
+                error = 0;
+            }
+            else
+            {
+                error = 2;
+            }
             break;
-        case 104:		// left
+        case 104:       // left
             if(x <= 77 && x > 2)
-			{
-				x = x - 1;
-				error = 0;
-			}
-			else
-			{
-				error = 2;
-			}
+            {
+                x = x - 1;
+                error = 0;
+            }
+            else
+            {
+                error = 2;
+            }
             break;
-        case 108:		// right
+        case 108:       // right
             if(x < 77 && x >= 2)
-			{
-				x = x + 1;
-				error = 0;
-			}
-			else
-			{
-				error = 2;
-			}
+            {
+                x = x + 1;
+                error = 0;
+            }
+            else
+            {
+                error = 2;
+            }
             break;
     }
-	return error;
+    return error;
 }
 
 void message_display(code)
 {
-	switch(code)
-		{
-			case 0:
-		        mvprintw(23,0,"Wrong key, stupid.");
-				break;
-			case 1:
-				mvprintw(23,0,"Steps: %i",steps);
-				break;
-			case 2:
-				mvprintw(23,0,"Ouch!");
-				break;
-		}
+    switch(code)
+        {
+            case 0:
+                mvprintw(23,0,"Wrong key, stupid.");
+                break;
+            case 1:
+                mvprintw(23,0,"Steps: %i",steps);
+                break;
+            case 2:
+                mvprintw(23,0,"Ouch!");
+                break;
+        }
 }
 void floodfill(x,y,xlength,ylength)
 {
-	int posx = 0;
-	int posy = 0;
-	while(posy < ylength)
-	{
-		while(posx < xlength)
-		{
-			mvprintw((posy+y),(posx+x),".");
-			posx = posx + 1;
-		}
-		posy = posy + 1;
-		posx = 0;
-	}
+    int posx = 0;
+    int posy = 0;
+    while(posy < ylength)
+    {
+        while(posx < xlength)
+        {
+            mvprintw((posy+y),(posx+x),".");
+            posx = posx + 1;
+        }
+        posy = posy + 1;
+        posx = 0;
+    }
 }
 
 int main()
@@ -109,22 +109,22 @@ int main()
 
     while(true)
     {  
-        floodfill(2,2,76,20); 		// the playing field
+        floodfill(2,2,76,20);       // the playing field
         player_display();
-		message_display(message_code);
-		refresh();
-        move(y,x);					// moves the cursor to the player
-		ch = getch();
+        message_display(message_code);
+        refresh();
+        move(y,x);                  // moves the cursor to the player
+        ch = getch();
         clear();
-		if(player_walk(ch) == 0)
-		{
-			message_code = 1;
-			steps = steps + 1;		// this means the player walked successfully
-    	}
-		else
-		{
-			message_code = 0;		// this means the player bumped into a wall
-		}
-	}
+        if(player_walk(ch) == 0)
+        {
+            message_code = 1;
+            steps = steps + 1;      // this means the player walked successfully
+        }
+        else
+        {
+            message_code = 0;       // this means the player bumped into a wall
+        }
+    }
     return 0;
 }
