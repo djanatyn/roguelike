@@ -43,6 +43,7 @@ int main()
 {
     char ch;
     int steps = 0;
+	int message_code = 0;
     initscr();
     keypad(stdscr, TRUE);
     noecho();
@@ -50,17 +51,28 @@ int main()
     while(true)
     {  
         mvprintw(y,x,"@");
-        mvprintw(23,0,"Steps: %i",steps);
+		switch(message_code)
+		{
+			case 0:
+		        mvprintw(23,0,"Ouch!");
+				break;
+			case 1:
+				mvprintw(23,0,"Steps: %i",steps);
+				break;
+		}
         move(y,x);
         refresh();
         ch = getch();
         clear();
-        if(player_walk(ch) == 0)
+		if(player_walk(ch) == 0)
 		{
-			steps = steps + 1;
+			message_code = 1;
+			steps = steps + 1;		// this means the player walked successfully
+    	}
+		else
+		{
+			message_code = 0;
 		}
-    }
-
+	}
     return 0;
 }
-
