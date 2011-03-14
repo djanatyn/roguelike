@@ -36,28 +36,28 @@ int player_walk(dir)                    // now includes collision check!
         default:
             error = 1;
             break;
-        case DOWN:                       // down
-            if(y < HEIGHT && y >= 2)        // error codes:
+        case DOWN:                      // down
+            if(y < HEIGHT && y >= 2)    // error codes:
             {                           // 0 - no error, ran successfully
                 y = y + 1;              // 1 - wrong key entered (never entered a case)
                 error = 0;              // 2 - bumped into a wall (entered a case, but didn't meet the requirements)
             }
             break;
-        case UP:                       // up
+        case UP:                        // up
             if(y <= HEIGHT  && y > 2)
             {
                 y = y - 1;
                 error = 0;
             }
             break;
-        case LEFT:                       // left
+        case LEFT:                      // left
             if(x <= LENGTH && x > 2)
             {
                 x = x - 1;
                 error = 0;
             }
             break;
-        case RIGHT:                       // right
+        case RIGHT:                     // right
             if(x < LENGTH && x >= 2)
             {
                 x = x + 1;
