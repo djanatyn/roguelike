@@ -12,14 +12,12 @@
 #define LEFT 104
 #define RIGHT 108
 
-#define FIELDLENGTH 76
-#define FIELDHEIGHT 20
+#define LENGTH 80
+#define HEIGHT 22
 
-#define LENGTH 77
-#define HEIGHT 21
 
-int x = 2;
-int y = 2;
+int x = 0;
+int y = 0;
 int steps = 0;
 int message_code = 0;
 
@@ -37,28 +35,28 @@ int player_walk(dir)                    // now includes collision check!
             error = 1;
             break;
         case DOWN:                      // down
-            if(y < HEIGHT && y >= 2)    // error codes:
+            if(y < HEIGHT && y >= 0)    // error codes:
             {                           // 0 - no error, ran successfully
                 y = y + 1;              // 1 - wrong key entered (never entered a case)
                 error = 0;              // 2 - bumped into a wall (entered a case, but didn't meet the requirements)
             }
             break;
         case UP:                        // up
-            if(y <= HEIGHT  && y > 2)
+            if(y <= HEIGHT  && y > 0)
             {
                 y = y - 1;
                 error = 0;
             }
             break;
         case LEFT:                      // left
-            if(x <= LENGTH && x > 2)
+            if(x <= LENGTH && x > 0)
             {
                 x = x - 1;
                 error = 0;
             }
             break;
         case RIGHT:                     // right
-            if(x < LENGTH && x >= 2)
+            if(x < LENGTH && x >= 0)
             {
                 x = x + 1;
                 error = 0;
@@ -73,13 +71,13 @@ void message_display(code)
     switch(code)
         {   
             case 0:
-                mvprintw(23,0,"Steps: %i",steps);
+                mvprintw(24,0,"Steps: %i",steps);
                 break;
             case 1:
-                mvprintw(23,0,"Wrong key, stupid.");
+                mvprintw(24,0,"Wrong key, stupid.");
                 break;
             case 2:    
-                mvprintw(23,0,"Ouch!");
+                mvprintw(24,0,"Ouch!");
                 break;
         }
 }
@@ -87,9 +85,9 @@ void floodfill(x,y,xlength,ylength)
 {
     int posx = 0;
     int posy = 0;
-    while(posy < ylength)
+    while(posy <= ylength)
     {
-        while(posx < xlength)
+        while(posx <= xlength)
         {
             mvprintw((posy+y),(posx+x),".");
             posx = posx + 1;
@@ -108,7 +106,7 @@ int main()
 
     while(true)
     {  
-        floodfill(2,2,FIELDLENGTH,FIELDHEIGHT);       // the playing field
+        floodfill(0,0,LENGTH,HEIGHT);       // the playing field
         player_display();
         message_display(message_code);
         refresh();
