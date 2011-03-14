@@ -12,8 +12,8 @@
 #define LEFT 104
 #define RIGHT 108
 
-#define LENGTH 80
-#define HEIGHT 22
+#define LENGTH 79
+#define HEIGHT 21
 
 
 int x = 0;
@@ -71,13 +71,13 @@ void message_display(code)
     switch(code)
         {   
             case 0:
-                mvprintw(24,0,"Steps: %i",steps);
+                mvprintw(23,0,"Steps: %i",steps);
                 break;
             case 1:
-                mvprintw(24,0,"Wrong key, stupid.");
+                mvprintw(23,0,"Wrong key, stupid.");
                 break;
             case 2:    
-                mvprintw(24,0,"Ouch!");
+                mvprintw(23,0,"Ouch!");
                 break;
         }
 }
