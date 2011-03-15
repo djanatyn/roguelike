@@ -13,8 +13,7 @@ CONTROLS
 --------
 The game is easy to control (so far): Just use the default vim keybindings.
 
-To git@github.com:djanatyn/roguelike.git
-   32e29d1..f885dcf  master -> master
+* left: h
 * down: j
 * up: k
 * right: l

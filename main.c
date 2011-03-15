@@ -6,6 +6,8 @@
 
 #include <ncurses.h>
 #include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define DOWN 106
 #define UP 107
@@ -71,6 +73,7 @@ void message_display(code)
     switch(code)
         {   
             case 0:
+                steps = steps + 1;
                 mvprintw(23,0,"Steps: %i",steps);
                 break;
             case 1:
@@ -81,6 +84,7 @@ void message_display(code)
                 break;
         }
 }
+
 void floodfill(x,y,xlength,ylength)
 {
     int posx = 0;
@@ -99,6 +103,7 @@ void floodfill(x,y,xlength,ylength)
 
 int main()
 {
+    srand(time(NULL));
     char ch;
     initscr();
     keypad(stdscr, TRUE);
@@ -107,21 +112,13 @@ int main()
     while(true)
     {  
         floodfill(0,0,LENGTH,HEIGHT);       // the playing field
+        message_display(player_walk(ch));
         player_display();
-        message_display(message_code);
         refresh();
-        move(y,x);                  // moves the cursor to the player
+        move(y,x);                          // moves the cursor to the player
         ch = getch();
         clear();
-        if(player_walk(ch) == 0)
-        {
-            message_code = 1;
-            steps = steps + 1;      // this means the player walked successfully
-        }
-        else
-        {
-            message_code = 0;       // this means the player bumped into a wall
-        }
+        
     }
     return 0;
 }
