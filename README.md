@@ -12,10 +12,10 @@ The propgram currently includes an ascii character which can bump into the edges
 CONTROLS
 --------
 The game is easy to control (so far): Just use the default vim keybindings.
-- left: h
-- down: j
-- up: k
-- right: l
+* left: h
+* down: j
+* up: k
+* right: l
 
 INSTALLATION
 ------------
