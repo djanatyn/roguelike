@@ -1,6 +1,6 @@
 A Roguelike Project
 ===================
-An experiment in the key of C
+### An experiment in the key of C
 * * *
 
 This is just a small project that I've been working on, and it may or may not be of interest to you. This is basically a small game in C, using the ncurses library, which utilizes ASCII characters as graphics. So far, this has mainly been an experiment with the library for me, but I've been making decent progress.
@@ -13,7 +13,8 @@ CONTROLS
 --------
 The game is easy to control (so far): Just use the default vim keybindings.
 
-* left: h
+To git@github.com:djanatyn/roguelike.git
+   32e29d1..f885dcf  master -> master
 * down: j
 * up: k
 * right: l
