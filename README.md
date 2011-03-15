@@ -13,13 +13,15 @@ CONTROLS
 --------
 The game is easy to control (so far): Just use the default vim keybindings.
 
-* left: h
-* down: j
-* up: k
-* right: l
+    * left: h
+    * down: j
+    * up: k
+    * right: l
 
 INSTALLATION
 ------------
 The game has absolutely no dependencies besides ncurses. To compile, simple download main.c and the Makefile, and run "make". It should generate an executable "rogue" in the same directory. You don't even need root or anything.
 
-Alternatively, you can navigate to the folder in which you downloaded main.c, and run "gcc main.c -o rogue -lncurses". Installation couldn't be easier.
+Alternatively, you can navigate to the folder in which you downloaded main.c, and compile the code with: 
+    gcc main.c -o rogue -lncurses
+Installation shouldn't give you any problems at all - if you have a C compiler, then more than likely you can compile the code.
