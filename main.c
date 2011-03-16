@@ -4,6 +4,14 @@
 // 3 - player found gold (not implemented yet)
 // 4 - player hit a monster (definitely not implemented yet)
 
+//  $$$$$$$$$$$$$$$$$$
+//  $$$$$$$   $$$$$$$$
+//  $$$$$$$ @ $$lo$er$
+//  $$$$$$$   $$$$$$$$
+//  $$$$$$$$$$$$$$$$$$
+//  $$$$$$$$$$$$$$$$$$
+
+
 #include <ncurses.h>
 #include <time.h>
 #include <stdio.h>
