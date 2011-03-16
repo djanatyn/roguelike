@@ -23,5 +23,7 @@ INSTALLATION
 The game has absolutely no dependencies besides ncurses. To compile, simple download main.c and the Makefile, and run "make". It should generate an executable "rogue" in the same directory. You don't even need root or anything.
 
 Alternatively, you can navigate to the folder in which you downloaded main.c, and compile the code with: 
+
     gcc main.c -o rogue -lncurses
-Installation shouldn't give you any problems at all - if you have a C compiler, then more than likely you can compile the code.
+
+Installation shouldn't give you any problems at all - if you have a C compiler, then more than likely you can compile the code. If you have any issues, feel free to contact me.
