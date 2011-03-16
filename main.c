@@ -109,6 +109,11 @@ void floodfill(x,y,xlength,ylength)
     }
 }
 
+void gold_display(x,y)
+{
+    mvprintw(y,x,"$");
+}
+
 int main()
 {
     srand(time(NULL));
@@ -116,11 +121,14 @@ int main()
     initscr();
     keypad(stdscr, TRUE);
     noecho();
+    int goldx = 5;
+    int goldy = 5;
 
     while(true)
     {  
         floodfill(0,0,LENGTH,HEIGHT);       // the playing field
         message_display(player_walk(ch));
+        gold_display(goldx,goldy);
         player_display();
         refresh();
         move(y,x);                          // moves the cursor to the player
