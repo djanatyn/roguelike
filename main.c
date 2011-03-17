@@ -28,7 +28,10 @@
 
 int x = 0;
 int y = 0;
-int steps = 0;
+int goldx = 5;
+int goldy = 5;
+
+int score = 0;
 int message_code = 0;
 
 void player_display()
@@ -81,8 +84,7 @@ void message_display(code)
     switch(code)
         {   
             case 0:
-                steps = steps + 1;
-                mvprintw(23,0,"Steps: %i",steps);
+                mvprintw(23,0,"Score: %i",score);
                 break;
             case 1:
                 mvprintw(23,0,"Wrong key, stupid.");
@@ -114,6 +116,22 @@ void gold_display(x,y)
     mvprintw(y,x,"$");
 }
 
+void gold_generate()
+{
+    int r;
+    goldx = rand()%LENGTH;
+    goldy = rand()%HEIGHT;
+}
+
+void gold_check()
+{
+    if(goldx == x && goldy == y)
+    {
+        score = score + 1;
+        gold_generate();
+    }
+}
+
 int main()
 {
     srand(time(NULL));
@@ -121,13 +139,12 @@ int main()
     initscr();
     keypad(stdscr, TRUE);
     noecho();
-    int goldx = 5;
-    int goldy = 5;
 
     while(true)
     {  
         floodfill(0,0,LENGTH,HEIGHT);       // the playing field
         message_display(player_walk(ch));
+        gold_check();
         gold_display(goldx,goldy);
         player_display();
         refresh();
