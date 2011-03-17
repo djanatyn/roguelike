@@ -118,7 +118,6 @@ void gold_display(x,y)
 
 void gold_generate()
 {
-    int r;
     goldx = rand()%LENGTH;
     goldy = rand()%HEIGHT;
 }
