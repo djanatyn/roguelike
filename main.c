@@ -26,17 +26,17 @@
 #define HEIGHT 21
 
 
-int x = 0;
-int y = 0;
-int goldx = 5;
-int goldy = 5;
+int player_x = 0;
+int player_y = 0;
+int gold_x = 5;
+int gold_y = 5;
 
 int score = 0;
 int message_code = 0;
 
 void player_display()
 {
-    mvprintw(y,x,"@");
+    mvprintw(player_y,player_x,"@");
 }
 
 int player_walk(dir)                    // now includes collision check!
@@ -48,30 +48,30 @@ int player_walk(dir)                    // now includes collision check!
             error = 1;
             break;
         case DOWN:                      // down
-            if(y < HEIGHT && y >= 0)    // error codes:
+            if(player_y < HEIGHT && player_y >= 0)    // error codes:
             {                           // 0 - no error, ran successfully
-                y = y + 1;              // 1 - wrong key entered (never entered a case)
+                player_y = player_y + 1;              // 1 - wrong key entered (never entered a case)
                 error = 0;              // 2 - bumped into a wall (entered a case, but didn't meet the requirements)
             }
             break;
         case UP:                        // up
-            if(y <= HEIGHT  && y > 0)
+            if(player_y <= HEIGHT  && player_y > 0)
             {
-                y = y - 1;
+                player_y = player_y - 1;
                 error = 0;
             }
             break;
         case LEFT:                      // left
-            if(x <= LENGTH && x > 0)
+            if(player_x <= LENGTH && player_x > 0)
             {
-                x = x - 1;
+                player_x = player_x - 1;
                 error = 0;
             }
             break;
         case RIGHT:                     // right
-            if(x < LENGTH && x >= 0)
+            if(player_x < LENGTH && player_x >= 0)
             {
-                x = x + 1;
+                player_x = player_x + 1;
                 error = 0;
             }
             break;
@@ -95,7 +95,7 @@ void message_display(code)
         }
 }
 
-void floodfill(x,y,xlength,ylength)
+void floodfill(xlength,ylength)
 {
     int posx = 0;
     int posy = 0;
@@ -103,7 +103,7 @@ void floodfill(x,y,xlength,ylength)
     {
         while(posx <= xlength)
         {
-            mvprintw((posy+y),(posx+x),".");
+            mvprintw((posy),(posx),".");
             posx = posx + 1;
         }
         posy = posy + 1;
@@ -118,13 +118,13 @@ void gold_display(x,y)
 
 void gold_generate()
 {
-    goldx = rand()%LENGTH;
-    goldy = rand()%HEIGHT;
+    gold_x = rand()%LENGTH;
+    gold_y = rand()%HEIGHT;
 }
 
 void gold_check()
 {
-    if(goldx == x && goldy == y)
+    if(gold_x == player_x && gold_y == player_y)
     {
         score = score + 1;
         gold_generate();
@@ -141,13 +141,13 @@ int main()
 
     while(true)
     {  
-        floodfill(0,0,LENGTH,HEIGHT);       // the playing field
+        floodfill(LENGTH,HEIGHT);       // the playing field
         message_display(player_walk(ch));
         gold_check();
-        gold_display(goldx,goldy);
+        gold_display(gold_x,gold_y);
         player_display();
         refresh();
-        move(y,x);                          // moves the cursor to the player
+        move(player_y,player_x);                          // moves the cursor to the player
         ch = getch();
         clear();
         
