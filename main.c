@@ -4,14 +4,6 @@
 // 3 - player found gold (not implemented yet)
 // 4 - player hit a monster (definitely not implemented yet)
 
-//  $$$$$$$$$$$$$$$$$$
-//  $$$$$$$   $$$$$$$$
-//  $$$$$$$ @ $$lo$er$
-//  $$$$$$$   $$$$$$$$
-//  $$$$$$$$$$$$$$$$$$
-//  $$$$$$$$$$$$$$$$$$
-
-
 #include <ncurses.h>
 #include <time.h>
 #include <stdio.h>
@@ -22,8 +14,8 @@
 #define LEFT 104
 #define RIGHT 108
 
-#define LENGTH 79
-#define HEIGHT 21
+#define LENGTH 10
+#define HEIGHT 10
 
 
 int player_x = 0;
@@ -33,6 +25,18 @@ int gold_y = 5;
 
 int score = 0;
 int message_code = 0;
+
+int map[10][10] = {
+    {1,1,1,1,1,1,1,1,1,1},   
+    {1,2,2,2,2,2,2,2,2,1},
+    {1,2,2,2,2,2,2,2,2,1},
+    {1,2,2,2,2,2,2,2,2,1},
+    {1,2,2,2,2,2,2,2,2,1},
+    {1,2,2,2,2,2,2,2,2,1},
+    {1,2,2,2,2,2,2,2,2,1},
+    {1,2,2,2,2,2,2,2,2,1},
+    {1,2,2,2,2,2,2,2,2,1},
+    {1,1,1,1,1,1,1,1,1,1} };
 
 void player_display()
 {
@@ -95,16 +99,26 @@ void message_display(code)
         }
 }
 
-void floodfill(xlength,ylength)
+void mapfill()
 {
     int posx = 0;
     int posy = 0;
-    while(posy <= ylength)
+    int location;
+    while(posy <= HEIGHT)
     {
-        while(posx <= xlength)
+        while(posx <= LENGTH)
         {
-            mvprintw((posy),(posx),".");
+            location = map[posx][posy];
+            switch(location)
+            {
+                case 1:
+                    mvprintw(posy,posx,"#");
+                    break;
+                case 2:
+                    mvprintw(posy,posx,".");
+                    break;
             posx = posx + 1;
+            }
         }
         posy = posy + 1;
         posx = 0;
@@ -141,7 +155,7 @@ int main()
 
     while(true)
     {  
-        floodfill(LENGTH,HEIGHT);       // the playing field
+        mapfill();       // the playing field
         message_display(player_walk(ch));
         gold_check();
         gold_display(gold_x,gold_y);
