@@ -104,9 +104,9 @@ void mapfill()
     int posx = 0;
     int posy = 0;
     int location;
-    while(posy <= HEIGHT)
+    while(posy < HEIGHT)
     {
-        while(posx <= LENGTH)
+        while(posx < LENGTH)
         {
             location = map[posx][posy];
             switch(location)
@@ -117,8 +117,8 @@ void mapfill()
                 case 2:
                     mvprintw(posy,posx,".");
                     break;
-            posx = posx + 1;
             }
+            posx = posx + 1;
         }
         posy = posy + 1;
         posx = 0;
