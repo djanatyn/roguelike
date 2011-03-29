@@ -93,7 +93,7 @@ void message_display(code)
             case 1:
                 mvprintw(23,0,"Wrong key, stupid.");
                 break;
-            case 2:    
+            case 2:  
                 mvprintw(23,0,"Ouch!");
                 break;
         }
@@ -108,7 +108,7 @@ void mapfill()
     {
         while(posx < LENGTH)
         {
-            location = map[posx][posy];
+            location = map[posy][posx];
             switch(location)
             {
                 case 1:
