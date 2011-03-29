@@ -18,8 +18,8 @@
 #define HEIGHT 10
 
 
-int player_x = 0;
-int player_y = 0;
+int player_x = 3;
+int player_y = 3;
 int gold_x = 5;
 int gold_y = 5;
 
@@ -30,12 +30,12 @@ int map[10][10] = {
     {1,1,1,1,1,1,1,1,1,1},   
     {1,2,2,2,2,2,2,2,2,1},
     {1,2,2,2,2,2,2,2,2,1},
-    {1,2,2,2,2,2,2,2,2,1},
-    {1,2,2,2,2,2,2,2,2,1},
-    {1,2,2,2,2,2,2,2,2,1},
-    {1,2,2,2,2,2,2,2,2,1},
-    {1,2,2,2,2,2,2,2,2,1},
-    {1,2,2,2,2,2,2,2,2,1},
+    {1,2,2,2,1,2,2,2,2,1},
+    {1,2,2,2,1,2,2,2,2,1},
+    {1,2,2,2,1,2,2,2,2,1},
+    {1,2,2,2,1,2,2,2,2,1},
+    {1,2,2,2,1,2,2,2,2,1},
+    {1,2,2,2,1,2,2,2,2,1},
     {1,1,1,1,1,1,1,1,1,1} };
 
 void player_display()
@@ -51,29 +51,29 @@ int player_walk(dir)                    // now includes collision check!
         default:
             error = 1;
             break;
-        case DOWN:                      // down
-            if(player_y < HEIGHT && player_y >= 0)    // error codes:
-            {                           // 0 - no error, ran successfully
-                player_y = player_y + 1;              // 1 - wrong key entered (never entered a case)
-                error = 0;              // 2 - bumped into a wall (entered a case, but didn't meet the requirements)
+        case DOWN:
+            if(map[(player_y + 1)][player_x] != 1)
+            {
+                player_y = player_y + 1;
+                error = 0;
             }
             break;
-        case UP:                        // up
-            if(player_y <= HEIGHT  && player_y > 0)
+        case UP:
+            if(map[(player_y - 1)][player_x] != 1)
             {
                 player_y = player_y - 1;
                 error = 0;
             }
             break;
-        case LEFT:                      // left
-            if(player_x <= LENGTH && player_x > 0)
+        case LEFT:
+            if(map[player_y][(player_x - 1)] != 1)
             {
                 player_x = player_x - 1;
                 error = 0;
             }
             break;
-        case RIGHT:                     // right
-            if(player_x < LENGTH && player_x >= 0)
+        case RIGHT:
+            if(map[player_y][(player_x + 1)] != 1)
             {
                 player_x = player_x + 1;
                 error = 0;
