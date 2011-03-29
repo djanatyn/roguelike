@@ -14,7 +14,7 @@
 #define LEFT 104
 #define RIGHT 108
 
-#define LENGTH 10
+#define LENGTH 10 
 #define HEIGHT 10
 
 
@@ -26,9 +26,10 @@ int gold_y = 2;
 int score = 0;
 int message_code = 0;
 
+
 int map[10][10] = {
-    {1,1,1,1,1,1,1,1,1,1},   
-    {1,2,2,2,2,2,2,2,2,1},
+    {1,1,1,1,1,1,1,1,1,1},
+    {1,2,2,2,2,2,2,1,2,1},
     {1,2,2,2,2,2,2,2,2,1},
     {1,2,2,2,2,2,2,2,2,1},
     {1,2,2,2,2,2,2,2,2,1},
@@ -37,6 +38,39 @@ int map[10][10] = {
     {1,2,2,2,2,3,2,2,2,1},
     {1,2,2,2,2,1,2,2,2,1},
     {1,1,1,1,1,1,1,1,1,1} };
+
+void load_map()
+{
+    FILE *fp;
+    int i;
+
+    fp = fopen("foo.dat", "r");
+
+    int map[10][10];
+
+    int posx = 0;
+    int posy = 0;
+
+    i = fgetc(fp);
+
+    while(i != -1)
+    {
+        if(i != 10)
+        {
+            map[posx][posy] = i;
+            posx = posx + 1;
+        }
+        else
+        {
+            posx = 0;
+            posy = posy + 1;
+        }
+        i = fgetc(fp);
+    }
+
+    fclose(fp);
+}
+
 
 void player_display()
 {
@@ -52,28 +86,28 @@ int player_walk(dir)                    // now includes collision check!
             error = 1;
             break;
         case DOWN:
-            if(map[(player_y + 1)][player_x] != 1)
+            if(map[(player_y + 1)][player_x] != 49)
             {
                 player_y = player_y + 1;
                 error = 0;
             }
             break;
         case UP:
-            if(map[(player_y - 1)][player_x] != 1)
+            if(map[(player_y - 1)][player_x] != 49)
             {
                 player_y = player_y - 1;
                 error = 0;
             }
             break;
         case LEFT:
-            if(map[player_y][(player_x - 1)] != 1)
+            if(map[player_y][(player_x - 1)] != 49)
             {
                 player_x = player_x - 1;
                 error = 0;
             }
             break;
         case RIGHT:
-            if(map[player_y][(player_x + 1)] != 1)
+            if(map[player_y][(player_x + 1)] != 49)
             {
                 player_x = player_x + 1;
                 error = 0;
@@ -111,13 +145,13 @@ void mapfill()
             location = map[posy][posx];
             switch(location)
             {
-                case 1:
+                case 49:
                     mvprintw(posy,posx,"#");
                     break;
-                case 2:
+                case 50:
                     mvprintw(posy,posx,".");
                     break;
-                case 3:
+                case 51:
                     mvprintw(posy,posx,"+");
                     break;
             }
@@ -159,6 +193,8 @@ int main()
     initscr();
     keypad(stdscr, TRUE);
     noecho();
+
+    load_map();
 
     while(true)
     {  
