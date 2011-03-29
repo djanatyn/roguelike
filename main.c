@@ -20,8 +20,8 @@
 
 int player_x = 3;
 int player_y = 3;
-int gold_x = 5;
-int gold_y = 5;
+int gold_x = 2;
+int gold_y = 2;
 
 int score = 0;
 int message_code = 0;
@@ -137,6 +137,10 @@ void gold_generate()
 {
     gold_x = rand()%LENGTH;
     gold_y = rand()%HEIGHT;
+    if(map[gold_x][gold_y] == 1)
+    {
+        gold_generate();
+    }
 }
 
 void gold_check()
