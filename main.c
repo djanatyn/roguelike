@@ -14,9 +14,13 @@
 #define LEFT 104
 #define RIGHT 108
 
-#define LENGTH 78 
+#define LENGTH 68
 #define HEIGHT 22
 
+#define WALL 49
+#define FLOOR 50
+#define DOOR 51
+#define PORTAL 52
 
 int player_x = 3;
 int player_y = 3;
@@ -26,6 +30,7 @@ int gold_y = 2;
 int score = 0;
 int message_code = 0;
 
+int dungeon_level = 0;
 
 int map[22][78]; // = {
 //    {1,1,1,1,1,1,1,1,1,1},
@@ -44,8 +49,15 @@ void load_map()
     FILE *fp;
     int i;
 
-    fp = fopen("foo.dat", "r");
-
+    switch(dungeon_level)
+    {
+        case 0:
+            fp = fopen("town.map", "r");
+            break;
+        case 1:
+            fp = fopen("dungeon.map", "r");
+            break;
+    }
     int posx = 0;
     int posy = 0;
 
@@ -84,28 +96,28 @@ int player_walk(dir)                    // now includes collision check!
             error = 1;
             break;
         case DOWN:
-            if(map[(player_y + 1)][player_x] != 49)
+            if(map[(player_y + 1)][player_x] != WALL)
             {
                 player_y = player_y + 1;
                 error = 0;
             }
             break;
         case UP:
-            if(map[(player_y - 1)][player_x] != 49)
+            if(map[(player_y - 1)][player_x] != WALL)
             {
                 player_y = player_y - 1;
                 error = 0;
             }
             break;
         case LEFT:
-            if(map[player_y][(player_x - 1)] != 49)
+            if(map[player_y][(player_x - 1)] != WALL)
             {
                 player_x = player_x - 1;
                 error = 0;
             }
             break;
         case RIGHT:
-            if(map[player_y][(player_x + 1)] != 49)
+            if(map[player_y][(player_x + 1)] != WALL)
             {
                 player_x = player_x + 1;
                 error = 0;
@@ -143,14 +155,18 @@ void mapfill()
             location = map[posy][posx];
             switch(location)
             {
-                case 49:
+                case WALL:
+
                     mvprintw(posy,posx,"#");
                     break;
-                case 50:
+                case FLOOR:
                     mvprintw(posy,posx,".");
                     break;
-                case 51:
+                case DOOR:
                     mvprintw(posy,posx,"+");
+                    break;
+                case PORTAL:
+                    mvprintw(posy,posx,">");
                     break;
             }
             posx = posx + 1;
@@ -169,7 +185,7 @@ void gold_generate()
 {
     gold_x = rand()%LENGTH;
     gold_y = rand()%HEIGHT;
-    if(map[gold_x][gold_y] == 1)
+    if(map[gold_x][gold_y] == WALL)
     {
         gold_generate();
     }
@@ -184,6 +200,16 @@ void gold_check()
     }
 }
 
+void check_level(change_x, change_y)
+{
+    if(player_x == change_x && player_y == change_y)
+    {
+        player_x = 20;
+        player_y = 10;
+        dungeon_level = 1;
+        load_map();
+    }
+}
 int main()
 {
     srand(time(NULL));
@@ -195,17 +221,17 @@ int main()
     load_map();
 
     while(true)
-    {  
-        mapfill();       // the playing field
+    {
+        mapfill();
         message_display(player_walk(ch));
         gold_check();
         gold_display(gold_x,gold_y);
         player_display();
         refresh();
-        move(player_y,player_x);                          // moves the cursor to the player
+        move(player_y,player_x);
         ch = getch();
+        check_level(4,4);
         clear();
-        
     }
     return 0;
 }
