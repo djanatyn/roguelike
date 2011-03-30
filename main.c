@@ -14,8 +14,8 @@
 #define LEFT 104
 #define RIGHT 108
 
-#define LENGTH 10 
-#define HEIGHT 10
+#define LENGTH 78 
+#define HEIGHT 22
 
 
 int player_x = 3;
@@ -27,7 +27,7 @@ int score = 0;
 int message_code = 0;
 
 
-int map[10][10]; // = {
+int map[22][78]; // = {
 //    {1,1,1,1,1,1,1,1,1,1},
 //    {1,2,2,2,2,2,2,1,2,1},
 //    {1,2,2,2,2,2,2,2,2,1},
