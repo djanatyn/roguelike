@@ -55,7 +55,7 @@ void load_map()
     {
         if(i != 10)
         {
-            map[posx][posy] = i;
+            map[posy][posx] = i;
             posx = posx + 1;
         }
         else
